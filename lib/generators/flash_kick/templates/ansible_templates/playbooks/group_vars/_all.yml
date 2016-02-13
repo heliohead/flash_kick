@@ -1,0 +1,4 @@
+---
+postgresql_version: <%= FlashKick::VariableStore.variables['postgresql_version'] %>
+ruby_version: <%= FlashKick::VariableStore.variables['ruby_version'] %>
+rbenv_root: /usr/local/rbenv

@@ -1,0 +1,43 @@
+---
+- name: add keyscan to allow basic access to github
+  shell: ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
+
+- name: install basic packages
+  apt: pkg={{item}} state=present update_cache=yes
+  with_items:
+    - build-essential
+    - git-core
+    - curl
+    - wget
+    - cmake
+    - python-dev
+
+- name: add apt-get repository for latest vim
+  action: apt_repository repo=ppa:fcwu-tw/ppa
+
+- name: install vim
+  apt: name=vim state=latest update_cache=yes
+
+- name: copy .vimrc
+  template: src=vimrc dest=/home/{{server_user}}/.vimrc owner={{server_user}} group={{server_user}}
+
+- name: check if NeoBundle exists
+  shell:  test -d /home/{{server_user}}/.vim/bundle/.neobundle && echo true
+  register: neobundle_installed
+  ignore_errors: yes
+
+- name: download NeoBundle plugin for vim
+  git: repo=git://github.com/Shougo/neobundle.vim dest=/home/{{server_user}}/.vim/bundle/neobundle.vim
+  when: neobundle_installed|failed
+
+- name: check if YouCompleteMe exists
+  shell:  test -d /home/{{server_user}}/.vim/bundle/YouCompleteMe && echo true
+  register: ycm_installed
+  ignore_errors: yes
+
+- name: download YouCompleteMe plugin for vim
+  git: repo=git://github.com/Valloric/YouCompleteMe dest=/home/{{server_user}}/.vim/bundle/YouCompleteMe
+  when: ycm_installed|failed
+
+- name: change .vim permissions
+  file: path=/home/{{server_user}}/.vim owner={{server_user}} group={{server_user}} recurse=yes state=directory

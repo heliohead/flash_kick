@@ -1,0 +1,21 @@
+---
+# Production playbook
+#==========================================================
+- hosts: root
+  sudo: true
+  user: root
+  roles:
+    - role: user
+    - role: security
+
+- hosts: deploy
+  sudo: true
+  user: <%= FlashKick::VariableStore.variables['server_user'] %>
+  roles:
+    - role: essentials
+    - role: nodejs
+    - role: nginx
+    - role: postgresql
+    - role: ruby
+    - role: variables
+    - role: complete

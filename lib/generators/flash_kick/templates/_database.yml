@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  ctype: en_US.utf8
+  collation: en_US.utf8
+  template: template0
+  pool: 5
+  username: vagrant
+  password: vagrant
+
+development:
+  <<: *default
+  database: <%= FlashKick::VariableStore.variables['app_name'] %>_development
+
+test:
+  <<: *default
+  database: <%= FlashKick::VariableStore.variables['app_name'] %>_test

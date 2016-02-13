@@ -1,3 +1,13 @@
+![flash kick](img/Flash_Kick.gif)
+```
+_____________             ______       ______ _____      ______
+___  __/__  /_____ __________  /_      ___  /____(_)________  /__
+__  /_ __  /_  __ `/_  ___/_  __ \     __  //_/_  /_  ___/_  //_/
+_  __/ _  / / /_/ /_(__  )_  / / /     _  ,<  _  / / /__ _  ,<
+/_/    /_/  \__,_/ /____/ /_/ /_/      /_/|_| /_/  \___/ /_/|_|
+
+         Flash kick = Ansible + Mina + Nginx + Puma
+```
 # FlashKick
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/flash_kick`. To experiment with that code, run `bin/console` for an interactive prompt.

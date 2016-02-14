@@ -8,15 +8,15 @@
     - libffi-dev
 
 - name: install rbenv
-  sudo: true
+  become: true
   git: repo=https://github.com/sstephenson/rbenv.git dest={{rbenv_root}}
 
 - name: install ruby-build as rbenv plugin
-  sudo: true
+  become: true
   git: repo=https://github.com/sstephenson/ruby-build.git dest={{rbenv_root}}/plugins/ruby-build
 
 - name: change owner of rbenv directory
-  sudo: true
+  become: true
   file: path={{rbenv_root}} owner={{server_user}} recurse=yes state=directory
 
 - name: add rbenv symlink

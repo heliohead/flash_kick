@@ -1,6 +1,6 @@
 ---
 - name: create config directory
-  sudo: true
+  become: true
   file: path={{app_root}}/shared/config owner={{server_user}} group={{server_user}} recurse=yes state=directory
 
 - name: copy database.yml
@@ -10,7 +10,7 @@
   template: src=secrets.yml dest={{app_root}}/shared/config/secrets.yml owner={{server_user}} group={{server_user}}
 
 - name: update app root directory permissions
-  sudo: true
+  become: true
   file: path={{app_root}} owner={{server_user}} group={{server_user}} recurse=yes state=directory
 
 - name: add symlink to app root

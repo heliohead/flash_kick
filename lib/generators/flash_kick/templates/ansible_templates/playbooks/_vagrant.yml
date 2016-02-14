@@ -2,7 +2,7 @@
 # Vagrant playbook
 #==========================================================
 - hosts: default
-  sudo: true
+  become: true
   vars:
     - server_user: vagrant
     - database_user: vagrant

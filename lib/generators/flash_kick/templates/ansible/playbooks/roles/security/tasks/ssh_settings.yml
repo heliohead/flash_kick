@@ -6,19 +6,19 @@
   file: path=/home/{{server_user}}/.ssh/authorized_keys mode=0400
 
 - name: change ssh port
-  sudo: true
+  become: true
   action: lineinfile dest=/etc/ssh/sshd_config regexp="^#?Port" line="Port {{server_ssh_port}}"
 
 - name: disable root user login via ssh
-  sudo: true
+  become: true
   action: lineinfile dest=/etc/ssh/sshd_config regexp="^#?PermitRootLogin" line="PermitRootLogin no"
 
 - name: disable password authentication
-  sudo: true
+  become: true
   action: lineinfile dest=/etc/ssh/sshd_config regexp="^#?PasswordAuthentication" line="PasswordAuthentication no"
 
 - name: allow deploy user login via ssh
-  sudo: true
+  become: true
   action: lineinfile dest=/etc/ssh/sshd_config insertafter=EOF line="AllowUsers {{server_user}}"
 
 - name: restart ssh service

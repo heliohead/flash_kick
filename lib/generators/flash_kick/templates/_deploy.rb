@@ -2,17 +2,20 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'
+require 'yaml'
 
-set :deploy_to,     '/var/www/<%= FlashKick::VariableStore.variables['app_name'] %>'
-set :app_path,      '/var/www/<%= FlashKick::VariableStore.variables['app_name'] %>/current'
-set :user,          '<%= FlashKick::VariableStore.variables['server_user'] %>'
-set :port,          '<%= FlashKick::VariableStore.variables['server_ssh_port'] %>'
-set :repository,    '<%= FlashKick::VariableStore.variables['app_repo'] %>'
+FLASH = YAML.load(File.read(File.expand_path('../../.env/production_env.yml', __FILE__)))
+
+set :deploy_to,     FLASH['app_name']
+set :app_path,      FLASH['app_name']
+set :user,          FLASH['server_user']
+set :port,          FLASH['server_ssh_port']
+set :repository,    FLASH['app_repo']
 set :forward_agent, true
 
 task :production do
-  set :domain,        '<%= FlashKick::VariableStore.variables['server_domain'] %>'
-  set :branch,        '<%= FlashKick::VariableStore.variables['app_repo_branch'] %>'
+  set :domain,        FLASH['server_domain']
+  set :branch,        FLASH['app_repo_branch']
   set :rails_env,     'production'
   set :shared_paths,  ['config/database.yml', 'config/secrets.yml', 'log', 'tmp', '.env/production_env.yml']
 end

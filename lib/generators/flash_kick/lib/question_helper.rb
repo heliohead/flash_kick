@@ -6,6 +6,8 @@ module FlashKick
 
     cattr_accessor :required
 
+    @shell ||= Thor::Shell::Color.new
+
     def self.question(type, &block)
       question_hash = block.call
       @@required    = question_hash[:required]
@@ -29,7 +31,7 @@ module FlashKick
         until answer != ''
           answer = Thor.new.ask(question)
           FlashKick::VariableStore.add_variable(key, answer.empty? ? default : answer)
-          puts "Answer required, but you can always change it later!!!\n\n" if answer == ''
+          @shell.say("Answer required, but you can always change it later!!!\n\n", :yellow) if answer == ''
         end
       else
         answer = Thor.new.ask(question)
@@ -44,7 +46,7 @@ module FlashKick
 
     def self.question_divider(value=nil)
       puts '-' * 100
-      puts "Default: #{value}" unless value.nil?
+      @shell.say("Default: #{value}", :green) unless value.nil?
     end
   end
 end

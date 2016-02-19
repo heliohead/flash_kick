@@ -22,8 +22,8 @@ module FlashKick
       end
       question :string do
         {
-          server_user: 'Enter a name for your server user',
-          required: true
+          server_user: 'Enter a name for your server deployer user',
+          default: 'deploy'
         }
       end
       question :string do
@@ -35,13 +35,13 @@ module FlashKick
       question :string do
         {
           ruby_version: 'Which version of Ruby would you like to install? [enter for default]',
-          default: '2.1.5'
+          default: '2.3.0'
         }
       end
       question :string do
         {
           postgresql_version: 'Which version of PostgreSQL would you like to install? [enter for default]',
-          default: '9.3'
+          default: '9.5'
         }
       end
       question :string do
@@ -53,7 +53,7 @@ module FlashKick
       question :string do
         {
           database_user: 'Enter a name for your production database user',
-          required: true
+          default: 'postgres'
         }
       end
       question :string do

@@ -13,7 +13,12 @@
   apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_lsb.codename}}-pgdg main"
 
 - name: install postgres
-  apt: name=postgresql-{{postgresql_version}} state=latest update_cache=true
+  become: true
+  apt:
+    name: "postgresql-{{postgresql_version}}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: copy pg_hba.conf
   become: true
@@ -25,6 +30,13 @@
 
 - name: start postgresql
   service: name=postgresql state=started
+
+- name: Install PostgreSQL contribs
+  become: true
+  apt:
+    name: "postgresql-contrib-{{postgresql_version}}"
+  notify: restart postgresql
+
 
 - name: create db user
   postgresql_user: name={{database_user}} password={{database_password}} role_attr_flags=CREATEDB

@@ -2,6 +2,9 @@
 - name: add keyscan to allow basic access to github
   shell: ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
 
+- name: add keyscan to allow basic access to Bitbucket
+  shell: ssh-keyscan bitbucket.org >> /etc/ssh/ssh_known_hosts
+
 - name: install basic packages
   apt: pkg={{item}} state=present update_cache=yes
   with_items:

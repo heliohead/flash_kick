@@ -6,11 +6,11 @@ require 'yaml'
 
 FLASH = YAML.load(File.read(File.expand_path('../../.env/production_env.yml', __FILE__)))
 
-set :deploy_to,     FLASH['app_name']
-set :app_path,      FLASH['app_name']
+set :deploy_to,     FLASH['app_root']
 set :user,          FLASH['server_user']
 set :port,          FLASH['server_ssh_port']
 set :repository,    FLASH['app_repo']
+set :rails_env,     FLASH['rails_env']
 set :forward_agent, true
 
 task :production do
@@ -49,14 +49,14 @@ end
 
 namespace :server do
   task start: :environment do
-    queue "cd #{app_path} && rails_env=#{rails_env} && bin/puma.sh start"
+    queue "cd $APP_ROOT/current && rails_env=#{rails_env} && bin/puma.sh start"
   end
 
   task stop: :environment do
-    queue "cd #{app_path} && rails_env=#{rails_env} && bin/puma.sh stop"
+    queue "cd $APP_ROOT/current && rails_env=#{rails_env} && bin/puma.sh stop"
   end
 
   task restart: :environment do
-    queue "cd #{app_path} && rails_env=#{rails_env} && bin/puma.sh restart"
+    queue "cd $APP_ROOT/current && rails_env=#{rails_env} && bin/puma.sh restart"
   end
 end
